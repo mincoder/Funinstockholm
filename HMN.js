@@ -1,0 +1,1 @@
+document.write("<h1><br><br><br><br><br><br></h1><center><button style=\"border:none;background-color:#66a0ff;color:white;width:50%;height:25%;align:center;\"><p style=\"font-size:5em;\">HMN</p></button></center>");
