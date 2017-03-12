@@ -11,12 +11,14 @@ function onClick(os) {
     elem.parentNode.removeChild(elem);
     var elem = document.getElementById('button2');
     elem.parentNode.removeChild(elem);
+    var elem = document.getElementById('buttonbuffer');
+    elem.parentNode.removeChild(elem);
   }
   document.getElementById("holder").innerHTML = "";
   if(english) {
-    document.getElementById("holder").innerHTML = "<button id=\"text\" style=\"font-size:3em;\">Loading...</button>";
+    document.getElementById("holder").innerHTML = "<button id=\"text\" style=\"font-size:3em;\">Loading...<img width=\"100em\" height=\"100em\" src=\"loading.gif\"/></button>";
   } else {
-    document.getElementById("holder").innerHTML = "<button id=\"text\" style=\"font-size:3em;\">Laddar...</button>";
+    document.getElementById("holder").innerHTML = "<button id=\"text\" style=\"font-size:3em;\">Laddar...<img width=\"100em\" height=\"100em\" src=\"loading.gif\"/></button>";
   }
   if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(onLocation);
@@ -34,19 +36,16 @@ function onClick(os) {
 function onLocation(pos) {
   var latlon = pos.coords.latitude + "," + pos.coords.longitude;
   var img_url = "https://maps.googleapis.com/maps/api/staticmap?center="+latlon+"&zoom=15&size=400x300&sensor=false&key=AIzaSyBu-916DdpKAjTmJNIgngS6HL_kDIKU0aU";
-  document.getElementById("holder").innerHTML = "<img src=\'"+img_url+"\' width=\"400em\" height=\"300em\">";
-  $.getJSON("http://130.237.177.249:7777/", { longitude:pos.coords.longitude, latitude:pos.coords.latitude, outside, english}, function(jsonresp){
+  $.getJSON("https://funinstockholmapi.herokuapp.com/", { longitude:pos.coords.longitude, latitude:pos.coords.latitude, outside, english}, function(jsonresp){
     //https://www.google.com/maps/embed/v1/directions?key=YOUR_API_KEY&origin=Oslo+Norway&destination=Telemark+Norway&avoid=tolls|highways
+    document.getElementById("holder").innerHTML = "<img src=\'"+img_url+"\' width=\"400em\" height=\"300em\">";
     document.getElementById("holder").innerHTML = document.getElementById("holder").innerHTML + "<table id=\"tab\" color=\"white\">";
     for(var i=0;i<10;i++) {
-      document.getElementById("tab").innerHTML = document.getElementById("tab").innerHTML + "<tr id=\"button\"><button><td><img width=\"160em\" height=\"160em\" src=\"data:image/png;base64,"+jsonresp.List[i].Img+"\"/></td><td><h1>" + jsonresp.List[i].Name + "</h1></td><td>" + jsonresp.List[i].Description + "</td></button></tr>";
+      document.getElementById("tab").innerHTML = document.getElementById("tab").innerHTML + "<tr id=\"button\"><td><img width=\"160em\" height=\"160em\" src=\"data:image/png;base64,"+jsonresp.List[i].Img+"\"/></td><td><h1>" + jsonresp.List[i].Name + "</h1></td><td>" + jsonresp.List[i].Description + "</td></tr>";
     }
     document.getElementById("holder").innerHTML = document.getElementById("holder").innerHTML + "<table>";
 
-
   });
-  var elem = document.getElementById('buttonbuffer');
-  elem.parentNode.removeChild(elem);
 }
 
 function changeLang() {

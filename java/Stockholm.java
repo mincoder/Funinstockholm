@@ -243,17 +243,6 @@ public class Stockholm {
 		
 		for(int i = 0x2080; i <= 0x209F; i++) msg = msg.replace("" + (char)i, "" + (char)(i % 256));
 		for(int i = 0x160;  i <= 0x256;  i++) msg = msg.replace("" + (char)i, "&#" + i + ";");
-		/*msg = msg.replace("Ã¶", "&ouml;")
-		.replace("Ã¤", "&auml;")
-		.replace("Ã¥", "&aring;")
-		.replace("Ã…", "&Aring;")
-		.replace("Ã„", "&Auml;")
-		.replace("Ã\u0096", "&Ouml;");
-		/*.replace("â\u0080\u009c", "")
-		.replace("'", "&apos;")
-		.replace("â\u0080\u0099", "'")
-		.replace("â\u0080\u009d", "'")
-		.replace("â\u0080\u0093", "-");*/
 		
 		return new JSONObject(msg);
 	}
