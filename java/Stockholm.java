@@ -69,11 +69,16 @@ public class Stockholm {
 						/**y_lat -= 90; }
 						y_lon = (y_lon < 0 ? (360 - (y_lon % 360)):y_lon) % 360;*/
 					}
-					//double radi = 0;
-					// double m = 111319.44;
-					
+					//double radi = 1000;
+					double m = 111319.44;
+					//double km= 111.31944;
+					//double mi= 11.131944; 0.1
 					System.out.println("After : [" + d_lon + ", " + d_lat + "]");//, [" + y_lon + ", " + y_lat + "]");
 					
+					double la_m = m * d_lat;
+					double lo_m = m * d_lon;
+					
+					System.out.println(la_m + "," + lo_m);
 					String msg = "";
 					try {
 						List<String> a = getRequest(false,false,a("0","1","2","3","4","5","6","7"),0,a(),10);
@@ -94,7 +99,7 @@ public class Stockholm {
 					}
 					
 					for(int i = 0x2080; i <= 0x209F; i++) msg = msg.replace("" + (char)i, "" + (char)(i % 256));
-					for(int i = 0x160;  i <= 0x256;  i++) msg = msg.replace("" + (char)i, "&#" + i + ";");
+					for(int i = 0xA0;   i <= 0xFF;   i++) msg = msg.replace("" + (char)i, "&#" + i + ";");
 					
 					byte[] gzip_msg = null; {
 						byte[] gzip_data = msg.getBytes(StandardCharsets.ISO_8859_1);
@@ -107,7 +112,6 @@ public class Stockholm {
 						gzip_msg = b_stream.toByteArray();
 					}
 					
-					//String data = new String(gzip_msg, StandardCharsets.ISO_8859_1);
 					event.getDevice().WriteToClient(("HTTP/2.0 200 OK\r\nAccess-Control-Allow-Origin: *\r\nContent-Length:"+gzip_msg.length+"\r\nContent-Encoding: gzip\r\nContent-Type: application/json\r\n\r\n" + new String(gzip_msg, StandardCharsets.ISO_8859_1) + "\r\n").getBytes(StandardCharsets.ISO_8859_1));;
 					event.consume();
 				}
@@ -164,6 +168,7 @@ public class Stockholm {
 		ImageIO.write(gi, "jpg", stream);
 		byte[] bytes = Base64.getEncoder().encode(stream.toByteArray());
 		
+		//bytes = "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".getBytes();
 		return new String(bytes);
 	}
 	
@@ -241,9 +246,12 @@ public class Stockholm {
 		
 		msg = new String(msg.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
 		
+<<<<<<< HEAD:java/Stockholm.java
 		for(int i = 0x2080; i <= 0x209F; i++) msg = msg.replace("" + (char)i, "" + (char)(i % 256));
 		for(int i = 0x160;  i <= 0x256;  i++) msg = msg.replace("" + (char)i, "&#" + i + ";");
 		
+=======
+>>>>>>> origin/master:Stockholm.java
 		return new JSONObject(msg);
 	}
 	
