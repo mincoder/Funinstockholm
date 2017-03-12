@@ -4,6 +4,9 @@ document.write("<h1 id=\"buttonbuffer\"></h1><center id=\"holder\"><button onCli
 var outside=true;
 var english=true;
 var loaded=false;
+var adress="";
+var jsonfromapi;
+var destinations= new Array("","","","","","","","","","");
 function onClick(os) {
   outside=os;
   if(!loaded) {
@@ -35,17 +38,32 @@ function onClick(os) {
 
 function onLocation(pos) {
   var latlon = pos.coords.latitude + "," + pos.coords.longitude;
-  var img_url = "https://maps.googleapis.com/maps/api/staticmap?center="+latlon+"&zoom=15&size=400x300&sensor=false&key=AIzaSyBu-916DdpKAjTmJNIgngS6HL_kDIKU0aU";
   $.getJSON("https://funinstockholmapi.herokuapp.com/", { longitude:pos.coords.longitude, latitude:pos.coords.latitude, outside, english}, function(jsonresp){
     //https://www.google.com/maps/embed/v1/directions?key=YOUR_API_KEY&origin=Oslo+Norway&destination=Telemark+Norway&avoid=tolls|highways
-    document.getElementById("holder").innerHTML = "<img src=\'"+img_url+"\' width=\"400em\" height=\"300em\">";
-    document.getElementById("holder").innerHTML = document.getElementById("holder").innerHTML + "<table id=\"tab\" color=\"white\">";
-    for(var i=0;i<10;i++) {
-      document.getElementById("tab").innerHTML = document.getElementById("tab").innerHTML + "<tr id=\"button\"><td><img width=\"160em\" height=\"160em\" src=\"data:image/png;base64,"+jsonresp.List[i].Img+"\"/></td><td><h1>" + jsonresp.List[i].Name + "</h1></td><td>" + jsonresp.List[i].Description + "</td></tr>";
-    }
-    document.getElementById("holder").innerHTML = document.getElementById("holder").innerHTML + "<table>";
-
+  $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + pos.coords.latitude + "," + pos.coords.longitude + "&key=AIzaSyDGbsRaW3DFXkgN5wiYHsgHObHAxXgwxg4", function(jsonresp1){
+    adress=jsonresp1.results[0].formatted_adress;
   });
+  var glob_times = 0;
+  for(var i=0;i<10;i++) {
+    $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + jsonresp.List[i].Latitude + "," + jsonresp.List[i].Longitude + "&key=AIzaSyDGbsRaW3DFXkgN5wiYHsgHObHAxXgwxg4", function(jsonresp2){
+      destinations[glob_times]=jsonresp2.results[0].formatted_address.replace(/ /g,"+").replace(/,/g,"");
+      var t = destinations;
+      if(glob_times==0) {
+        document.getElementById("holder").innerHTML = "";
+        document.getElementById("holder").innerHTML = document.getElementById("holder").innerHTML + "<table id=\"tab\" color=\"white\">";
+      }
+      //for(var j=0;j<10;j++) {
+        document.getElementById("tab").innerHTML = document.getElementById("tab").innerHTML + "<tbody><tr id=\"button\"><td><a href=\"https://www.google.com/maps/place/" + t[glob_times] +"/\"><img width=\"160em\" height=\"160em\" src=\"data:image/png;base64,"+jsonresp.List[glob_times].Img+"\"/></a></td><td><h1>" + jsonresp.List[glob_times].Name + "</h1></td><td>" + jsonresp.List[glob_times].Description + "</td></tr></tbody></a>";
+      //}
+      if(glob_times==9) {
+        document.getElementById("holder").innerHTML = document.getElementById("holder").innerHTML + "<table>";
+      }
+      jsonfromapi=jsonresp;
+      glob_times++;
+    });
+  }
+  });
+
 }
 
 function changeLang() {
