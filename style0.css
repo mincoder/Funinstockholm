@@ -1,0 +1,95 @@
+#text {
+  border:none;
+  background-color:#0048bc;
+  color:white;
+  width:50%;
+  height:25%;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+}
+
+#button {
+  background-color:#0048bc;
+  border-color: #0048bc;
+  color:white;
+  width:50%;
+  height:25%;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+}
+#button1 {
+  background-color:#0048bc;
+  border-color: #0048bc;
+  color:white;
+  width:50%;
+  height:25%;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+}
+#button2 {
+  background-color:#0048bc;
+  border-color: #0048bc;
+  color:white;
+  width:50%;
+  height:25%;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+}
+
+#tab {
+  background-color:#0048bc;
+  border-color: #0048bc;
+  color:white;
+  width:75%;
+  height:25%;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+}
+
+#minibutton {
+  background-color:#0048bc;
+  border-color: #0048bc;
+  color:white;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+}
+
+/*#bar {
+  background-color:#757575;
+  border-radius: 5px;
+  border-width: 0.2em;
+  border-color: #00000
+  color:white;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+}
+
+#tab {
+  background-color:#757575;
+  border:solid;
+  border-width: 0.2em;
+  border-color: #00000
+  color:white;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+}
+
+#bar:hover {
+  background-color: #939393;
+  color: white;
+}*/
+
+#button:hover {
+  background-color: #66a0ff; /* Green */
+  color: white;
+}
+
+#minibutton:hover {
+  background-color: #66a0ff; /* Green */
+  color: white;
+}
+
+#button:hover {
+  background-color: #66a0ff; /* Green */
+  color: white;
+}
